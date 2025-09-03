@@ -316,22 +316,22 @@ p {
  
 .timeline-wrapper {
     padding: 0.5rem;
-    overflow-x: auto;      /* يخلي في سكرول جانبي */
-    -webkit-overflow-scrolling: touch; /* سحب ناعم بالموبايل */
+    overflow-x: auto;      
+    -webkit-overflow-scrolling: touch; 
   }
 
 .timeline {
   display: flex;
   flex-direction: row;
   gap: 0.5rem;
-  min-width: max-content;          /* يجعل الـ flex container يتوسع حسب المحتوى */
-  flex-wrap: nowrap;               /* يمنع النزول لسطر جديد */
-  justify-content: flex-start;     /* تبدأ المربعات من اليسار */
+  min-width: max-content;          
+  flex-wrap: nowrap;               
+  justify-content: flex-start;     
 }
 .timeline-step {
-  flex: 0 0 120px; /* حجم ثابت */
+  flex: 0 0 120px; 
   width: 120px;
-  height: 120px;   /* نفس العرض */
+  height: 120px;   
   font-size: 0.7rem;
   padding: 0.5rem;
   border-radius: 12px;
@@ -340,7 +340,7 @@ p {
   justify-content: center;
   align-items: center;
   
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1); /* اختياري لمظهر أجمل */
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1); 
 }
 
 .step-icon {
@@ -351,7 +351,7 @@ p {
 .step-number {
   font-size: 0.7rem;
   padding: 2px 5px;
-  border-radius: 50%; /* دائرة صغيرة للرقم */
+  border-radius: 50%; 
   background: #ddd;
 }
 
