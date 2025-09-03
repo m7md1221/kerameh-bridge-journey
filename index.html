@@ -464,19 +464,35 @@ const stepsToPalestine = [
         prevBtn.innerHTML = currentStep === 0 ? '→ البداية' : '→ السابق';
     }
 
-    function goToStep(stepIndex) {
-        if (stepIndex >= 0 && stepIndex < stepsData.length) {
-            showLoadingAnimation();
-            setTimeout(() => {
-                currentStep = stepIndex;
-                renderTimeline();
-                renderContent();
-                updateProgressBar();
-                updatePhaseIndicator();
-                saveProgress();
-            }, 100);
-        }
+   function goToStep(stepIndex) {
+    if (stepIndex >= 0 && stepIndex < stepsData.length) {
+        showLoadingAnimation();
+        setTimeout(() => {
+            currentStep = stepIndex;
+            renderTimeline();       // تحديث الـ timeline
+            renderContent();
+            updateProgressBar();
+            updatePhaseIndicator();
+            saveProgress();
+
+            // Scroll تلقائي للخطوة النشطة
+            const wrapper = document.querySelector('.timeline-wrapper');
+            const activeStep = document.querySelector('.timeline-step.active');
+            if (activeStep) {
+                const wrapperRect = wrapper.getBoundingClientRect();
+                const stepRect = activeStep.getBoundingClientRect();
+                const offset = stepRect.left - wrapperRect.left - wrapper.clientWidth / 2 + stepRect.width / 2;
+
+                wrapper.scrollBy({
+                    left: offset,
+                    behavior: 'smooth'
+                });
+            }
+
+        }, 100);
     }
+}
+
 
     function showLoadingAnimation() {
         contentSection.style.opacity = '0.5';
