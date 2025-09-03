@@ -7,501 +7,23 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
-    <style>
-        :root {
-            --palestinian-color: #009639;
-            --israeli-color: #0038a8;
-            --jordanian-color: #ce1126;
-            --primary-text: #2c3e50;
-            --secondary-text: #7f8c8d;
-            --bg-light: #f8fafc;
-            --bg-white: #ffffff;
-            --border-light: #e2e8f0;
-            --shadow-sm: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-            --shadow-md: 0 4px 6px rgba(0,0,0,0.07), 0 1px 3px rgba(0,0,0,0.06);
-            --shadow-lg: 0 10px 15px rgba(0,0,0,0.1), 0 4px 6px rgba(0,0,0,0.05);
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            --gradient-palestinian: linear-gradient(135deg, #009639 0%, #00b04f 100%);
-            --gradient-israeli: linear-gradient(135deg, #0038a8 0%, #1e5bc7 100%);
-            --gradient-jordanian: linear-gradient(135deg, #ce1126 0%, #e63946 100%);
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            direction: rtl;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: var(--primary-text);
-            line-height: 1.7;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .header {
-            background: var(--bg-white);
-            padding: 1.5rem;
-            box-shadow: var(--shadow-md);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            backdrop-filter: blur(10px);
-        }
-
-        .header h1 {
-            text-align: center;
-            font-size: clamp(1.25rem, 4vw, 2rem);
-            font-weight: 600;
-            color: var(--primary-text);
-            margin-bottom: 1rem;
-            background: linear-gradient(135deg, var(--palestinian-color), var(--jordanian-color));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .progress-container {
-            background: var(--border-light);
-            height: 8px;
-            width: min(90%, 800px);
-            margin: 0 auto;
-            border-radius: 20px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .progress-bar {
-            height: 100%;
-            width: 0;
-            background: var(--gradient-palestinian);
-            transition: var(--transition);
-            border-radius: 20px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .progress-bar::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            animation: shimmer 2s infinite;
-        }
-
-        @keyframes shimmer {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
-        }
-
-        .main-container {
-            flex: 1;
-            padding: 2rem 1rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 2rem;
-        }
-
-        .timeline-wrapper {
-            background: var(--bg-white);
-            padding: 2rem;
-            border-radius: 20px;
-            box-shadow: var(--shadow-lg);
-            width: min(95%, 1200px);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .timeline-wrapper::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--palestinian-color), var(--israeli-color), var(--jordanian-color));
-        }
-
-        .timeline {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-            justify-items: center;
-        }
-
-        .timeline-step {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            cursor: pointer;
-            transition: var(--transition);
-            padding: 1rem;
-            border-radius: 15px;
-            position: relative;
-            min-height: 120px;
-            justify-content: center;
-        }
-
-        .timeline-step:hover {
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: var(--shadow-md);
-        }
-
-        .timeline-step.active {
-            background: var(--bg-light);
-            box-shadow: var(--shadow-md);
-        }
-
-        .step-icon {
-            font-size: 2.5rem;
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: var(--bg-light);
-            border: 3px solid var(--border-light);
-            margin-bottom: 0.75rem;
-            transition: var(--transition);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .timeline-step.active .step-icon,
-        .timeline-step.completed .step-icon {
-            color: white;
-            border-color: transparent;
-            box-shadow: var(--shadow-md);
-        }
-
-        .timeline-step.palestinian-phase .step-icon {
-            background: var(--gradient-palestinian);
-        }
-
-        .timeline-step.israeli-phase .step-icon {
-            background: var(--gradient-israeli);
-        }
-
-        .timeline-step.jordanian-phase .step-icon {
-            background: var(--gradient-jordanian);
-        }
-
-        .timeline-step-title {
-            font-weight: 500;
-            font-size: 0.9rem;
-            color: var(--primary-text);
-            line-height: 1.4;
-        }
-
-        .timeline-step.active .timeline-step-title {
-            font-weight: 600;
-        }
-
-        .step-number {
-            position: absolute;
-            top: -5px;
-            right: -5px;
-            background: var(--primary-text);
-            color: white;
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.75rem;
-            font-weight: 600;
-        }
-
-        .content-container {
-            background: var(--bg-white);
-            padding: 2.5rem;
-            border-radius: 20px;
-            box-shadow: var(--shadow-lg);
-            width: min(95%, 900px);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .content-container::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: var(--gradient-palestinian);
-            transition: var(--transition);
-        }
-
-        .content-container.israeli-phase::before {
-            background: var(--gradient-israeli);
-        }
-
-        .content-container.jordanian-phase::before {
-            background: var(--gradient-jordanian);
-        }
-
-        .step-navigation {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-            gap: 1rem;
-        }
-
-        .nav-button {
-            padding: 0.875rem 2rem;
-            border: none;
-            border-radius: 50px;
-            font-size: 1rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-family: inherit;
-            min-width: 120px;
-            justify-content: center;
-        }
-
-        .nav-button:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
-        }
-
-        .nav-button:active:not(:disabled) {
-            transform: translateY(0);
-        }
-
-        #prevBtn {
-            background: linear-gradient(135deg, var(--secondary-text), #95a5a6);
-            color: white;
-        }
-
-        #nextBtn {
-            background: var(--gradient-palestinian);
-            color: white;
-        }
-
-        .nav-button:disabled {
-            background: var(--border-light);
-            color: var(--secondary-text);
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
-        }
-
-        .step-counter {
-            background: var(--bg-light);
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-weight: 500;
-            color: var(--primary-text);
-            font-size: 0.9rem;
-        }
-
-        .content-section {
-            animation: fadeInUp 0.5s ease-out;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .content-title {
-            font-size: 1.75rem;
-            font-weight: 600;
-            margin-bottom: 1.5rem;
-            color: var(--primary-text);
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .content-title::before {
-            content: '';
-            width: 4px;
-            height: 40px;
-            background: var(--gradient-palestinian);
-            border-radius: 2px;
-        }
-
-        .content-text {
-            font-size: 1.1rem;
-            color: var(--primary-text);
-            line-height: 1.8;
-        }
-
-        .content-text strong {
-            color: var(--palestinian-color);
-            font-weight: 600;
-        }
-
-        .content-text ul {
-            margin: 1.5rem 0;
-            padding-right: 1.5rem;
-        }
-
-        .content-text li {
-            margin-bottom: 0.75rem;
-            position: relative;
-        }
-
-        .content-text li::marker {
-            color: var(--palestinian-color);
-        }
-
-        .cost-highlight {
-            background: linear-gradient(135deg, #fff3cd, #ffeaa7);
-            padding: 1rem 1.5rem;
-            border-radius: 15px;
-            border-right: 4px solid #f39c12;
-            margin: 1.5rem 0;
-            font-weight: 500;
-        }
-
-        .phase-indicator {
-            position: absolute;
-            top: 1rem;
-            left: 1rem;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: white;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .phase-indicator.palestinian-phase {
-            background: var(--gradient-palestinian);
-        }
-
-        .phase-indicator.israeli-phase {
-            background: var(--gradient-israeli);
-        }
-
-        .phase-indicator.jordanian-phase {
-            background: var(--gradient-jordanian);
-        }
-
-        .footer {
-            background: var(--bg-white);
-            text-align: center;
-            padding: 1.5rem;
-            color: var(--secondary-text);
-            border-top: 1px solid var(--border-light);
-            font-size: 0.9rem;
-        }
-
-        /* Enhanced Responsive Design */
-        @media (max-width: 768px) {
-            .main-container {
-                padding: 1rem;
-                gap: 1.5rem;
-            }
-
-            .timeline-wrapper,
-            .content-container {
-                padding: 1.5rem;
-            }
-
-            .timeline {
-                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-                gap: 1rem;
-            }
-
-            .step-icon {
-                width: 60px;
-                height: 60px;
-                font-size: 2rem;
-            }
-
-            .timeline-step-title {
-                font-size: 0.8rem;
-            }
-
-            .content-title {
-                font-size: 1.5rem;
-            }
-
-            .step-navigation {
-                flex-direction: column;
-                gap: 1rem;
-            }
-
-            .nav-button {
-                width: 100%;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .header {
-                padding: 1rem;
-            }
-
-            .timeline {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .timeline-wrapper,
-            .content-container {
-                padding: 1rem;
-            }
-
-            .step-icon {
-                width: 50px;
-                height: 50px;
-                font-size: 1.8rem;
-            }
-        }
-
-        /* Accessibility improvements */
-        @media (prefers-reduced-motion: reduce) {
-            * {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
-            }
-        }
-
-        .sr-only {
-            position: absolute;
-            width: 1px;
-            height: 1px;
-            padding: 0;
-            margin: -1px;
-            overflow: hidden;
-            clip: rect(0, 0, 0, 0);
-            white-space: nowrap;
-            border: 0;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
     <header class="header">
         <h1>رحلة عبور جسر الكرامة خطوة بخطوة</h1>
+      <div class="toggle-switch">
+  <input type="radio" name="route" id="toJordan" value="toJordan" checked>
+  <label for="toJordan">فلسطين ← الأردن</label>
+
+  <input type="radio" name="route" id="toPalestine" value="toPalestine">
+  <label for="toPalestine">الأردن ← فلسطين</label>
+
+  <div class="switch-slider"></div>
+</div></header>
+
+
         <div class="progress-container">
             <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
         </div>
@@ -515,15 +37,11 @@
         <div class="content-container">
             <div class="phase-indicator"></div>
             <div class="step-navigation">
-                <button id="prevBtn" class="nav-button" aria-label="الخطوة السابقة">
-                    ← السابق
-                </button>
+                <button id="prevBtn" class="nav-button" aria-label="الخطوة السابقة">← السابق</button>
                 <div class="step-counter">
                     <span id="currentStepNumber">1</span> من <span id="totalSteps">7</span>
                 </div>
-                <button id="nextBtn" class="nav-button" aria-label="الخطوة التالية">
-                    التالي →
-                </button>
+                <button id="nextBtn" class="nav-button" aria-label="الخطوة التالية">التالي →</button>
             </div>
             <div class="content-section" role="tabpanel"></div>
         </div>
@@ -533,40 +51,50 @@
         <p>هذا الموقع تعليمي وإرشادي – غير رسمي | تم التطوير بهدف تسهيل رحلة المسافرين</p>
     </footer>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const timeline = document.querySelector('.timeline');
-            const progressBar = document.querySelector('.progress-bar');
-            const contentSection = document.querySelector('.content-section');
-            const contentContainer = document.querySelector('.content-container');
-            const phaseIndicator = document.querySelector('.phase-indicator');
-            const prevBtn = document.getElementById('prevBtn');
-            const nextBtn = document.getElementById('nextBtn');
-            const currentStepNumber = document.getElementById('currentStepNumber');
-            const totalSteps = document.getElementById('totalSteps');
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const timeline = document.querySelector('.timeline');
+    const progressBar = document.querySelector('.progress-bar');
+    const contentSection = document.querySelector('.content-section');
+    const contentContainer = document.querySelector('.content-container');
+    const phaseIndicator = document.querySelector('.phase-indicator');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const currentStepNumber = document.getElementById('currentStepNumber');
+    const totalSteps = document.getElementById('totalSteps');
+    const routeRadios = document.querySelectorAll('input[name="route"]');
 
-            const stepsData = [
-                {
-                    title: "الوصول إلى أريحا",
-                    icon: "🚗",
-                    phase: "palestinian-phase",
-                    phaseName: "الجانب الفلسطيني",
-                    content: {
-                        title: "المرحلة الأولى: الوصول إلى نقطة العبور في أريحا",
-                        text: `
-                            <p class="content-text">
-                                عند وصولك إلى البوابة الرئيسية لمعبر جسر الكرامة، سيقوم موظف الأمن بإعطائك رقم دورك 
-                                مكتوبًا على ورقة صغيرة. هذا الرقم مهم جداً لأنك ستحتاجه في المرحلة الرابعة عند ختم الجواز.
-                            </p>
-                            <div class="cost-highlight">
-                                <strong>نصيحة مهمة:</strong> احتفظ بهذا الرقم في مكان آمن وسهل الوصول إليه
-                            </div>
-                        `
-                    }
-                },
+    //  فلسطين الى الأردن
+    const stepsToJordan = 
+            [
+              {
+    title: "الوصول إلى أريحا",
+        icon: "Car", 
+    phase: "palestinian-phase",
+    phaseName: "الجانب الفلسطيني",
+    content: {
+        title: "المرحلة الأولى: الوصول إلى نقطة العبور في أريحا",
+        text: `
+            <p class="content-text">
+                عند وصولك إلى البوابة الرئيسية لمعبر جسر الكرامة، سيقوم موظف الأمن بإعطائك رقم دورك 
+                مكتوبًا على ورقة صغيرة. هذا الرقم مهم جداً لأنك ستحتاجه في المرحلة الرابعة عند ختم الجواز.
+            </p>
+            <div class="cost-highlight">
+                <strong>نصيحة مهمة:</strong> احتفظ بهذا الرقم في مكان آمن وسهل الوصول إليه
+            </div>
+            <p class="content-text">
+               إذا كنت ترغب بمعرفة تفاصيل <strong>حواجز أريحا</strong> قبل الوصول، يُرجى زيارة الموقع الإلكتروني التالي:
+                <a href="https://www.aweenrayeh.com/" target="_blank" rel="noopener noreferrer">
+                    aweenrayeh.com
+                </a>
+            </p>
+        `
+    }
+},
+
                 {
                     title: "قاعة معالجة الشنط",
-                    icon: "🧳",
+                    icon: "Luggage",
                     phase: "palestinian-phase",
                     phaseName: "الجانب الفلسطيني",
                     content: {
@@ -590,7 +118,7 @@
                 },
                 {
                     title: "دفع ضريبة المسافر",
-                    icon: "💳",
+                    icon: "credit-card",
                     phase: "palestinian-phase",
                     phaseName: "الجانب الفلسطيني",
                     content: {
@@ -611,7 +139,7 @@
                 },
                 {
                     title: "ختم الجواز الفلسطيني",
-                    icon: "📋",
+                    icon: "file-text",
                     phase: "palestinian-phase",
                     phaseName: "الجانب الفلسطيني",
                     content: {
@@ -631,12 +159,12 @@
                     }
                 },
                 {
-                    title: "التفتيش الإسرائيلي",
-                    icon: "🛂",
+                    title: "التفتيش 'الإسرائيلي'",
+                    icon: "shield-check",
                     phase: "israeli-phase",
-                    phaseName: "الجانب الإسرائيلي",
+                    phaseName: "الجانب 'الإسرائيلي'",
                     content: {
-                        title: "المرحلة الخامسة: التفتيش والمعالجة - الجانب الإسرائيلي",
+                        title: "المرحلة الخامسة: التفتيش والمعالجة - الجانب 'الإسرائيلي'",
                         text: `
                             <p class="content-text">
                                 في هذا الجانب، ستمر بعدة خطوات أمنية وإدارية:
@@ -656,9 +184,9 @@
                 },
                 {
                     title: "الحافلة إلى الأردن",
-                    icon: "🚌",
+                    icon: "Bus",
                     phase: "israeli-phase",
-                    phaseName: "الجانب الإسرائيلي",
+                    phaseName: "الجانب 'الإسرائيلي'",
                     content: {
                         title: "المرحلة السادسة: الانتقال بالحافلة إلى الجانب الأردني",
                         text: `
@@ -679,7 +207,7 @@
                 },
                 {
                     title: "الوصول إلى الأردن",
-                    icon: "🇯🇴",
+                    icon: "Flag",
                     phase: "jordanian-phase",
                     phaseName: "الجانب الأردني",
                     content: {
@@ -705,321 +233,301 @@
                     }
                 }
             ];
+  // الأردن إلى فلسطين
+const stepsToPalestine = [
+  {
+    title: "الحجز على منصة جت",
+    icon: "Calendar",
+    phase: "jordanian-phase",
+    phaseName: "الجانب الأردني",
+    content: {
+        title: "المرحلة الأولى: الحجز والاستعداد قبل العبور",
+        text: `
+            <p class="content-text">
+                يجب حجز تذكرة على منصة 
+                <a href="https://jett-khb.com.jo/booking" target="_blank">جت</a> 
+                بتاريخ يوم العبور وتحديد عدد الشنط المصاحبة.
+            </p>
+            <ul class="content-text">
+                <li>تأكد من إدخال <strong>الاسم الكامل، تاريخ الميلاد، ورقم الجواز</strong> بشكل صحيح.</li>
+                <li>احتفظ بصورة إلكترونية أو مطبوعة من التذكرة أو <strong>رمز QR</strong> لتقديمه عند المعبر.</li>
+                <li>حدد <strong>عدد الشنط وأحجامها</strong> بدقة، لأن هذه المعلومة تستخدم لاحقاً في إصدار الليبل.</li>
+                <li>حضّر الأوراق المهمة مثل <strong>الجواز، الإيصالات، وأي مستندات إضافية</strong> قبل الوصول للمعبر.</li>
+                <li>يفضل الوصول <strong>قبل ساعة على الأقل</strong> من موعد الرحلة لتفادي أي تأخير.</li>
+            </ul>
+            <div class="cost-highlight">
+                <strong>رسوم منصة جت:</strong> 7 دنانير أردنية لكل راكب، 2 دينار لكل شنطة كبيرة.
+            </div>
+            <div class="cost-highlight">
+                <strong>نصيحة مهمة:</strong> يفضل الحجز قبل يوم أو يومين لتجنب نفاد المقاعد، خصوصاً في أوقات الذروة.
+            </div>
+        `
+    }
+}
 
-            let currentStep = 0;
+,
+    {
+        title: "الوصول إلى المعبر الأردني",
+        icon: "Flag",
+        phase: "jordanian-phase",
+        phaseName: "الجانب الأردني",
+        content: {
+            title: "المرحلة الثانية: التأكد من الحجز والتوجه للشباك",
+            text: `
+                <p class="content-text">
+                 <ol>
+                        <li>  عند الوصول لأول نقطة أمن، سيتم التأكد من وجود حجزك على منصة جت</li>
+                        <li>التوجه إلى شباك تذاكر جت لاستلام تذاكر الباص وأوراق الشنط قبل المرور على التفتيش.</li>
+                    </ol>
+                    </p>
+            `
+        }
+    },
+   {
+    title: "إجراءات المغادرة الأردنية",
+    icon: "file-text",
+    phase: "jordanian-phase",
+    phaseName: "الجانب الأردني",
+    content: {
+        title: "المرحلة الثالثة: التفتيش وتعبئة أوراق المغادرة",
+        text: `
+            <ul class="content-text">
+                <li><strong>اجتياز نقطة التفتيش الأردنية</strong> قبل أي إجراءات ورقية.</li>
+                <li><strong>تعبئة ورقة المغادرة وختمها</strong> من الشبابيك.</li>
+                <li><strong>تسليم الأوراق الأصلية</strong> للموظفين واحتفظ بالنسخة الثانية معك.</li>
+            </ul>
+            <div class="cost-highlight">
+                <strong>نصيحة مهمة:</strong> احتفظ بورقة المغادرة في مكان آمن، ستحتاجها في آخر نقطة تفتيش أردنية - المرحلة الرابعة
+            </div>
+        `
+    }
+}
+,
+    {
+        title: "الصعود على الباص الأردني",
+        icon: "Bus",
+        phase: "jordanian-phase",
+        phaseName: "الجانب الأردني",
+        content: {
+            title: "المرحلة الرابعة: الانتقال عبر الباص",
+            text: `
+                <p class="content-text">
+                    تصعد على الباص، وسيأخذ شرطي قطعة من ورقة المغادرة ويترك لك القطعة الثانية التي تُستخدم عند آخر نقطة تفتيش أردنية.
+                </p>
+            `
+        }
+    },
+    {
+        title: "الوصول إلى المعبر 'الإسرائيلي'",
+        icon: "shield-check",
+        phase: "israeli-phase",
+        phaseName: "الجانب 'الإسرائيلي'",
+        content: {
+            title: "المرحلة الخامسة: استلام الشنط والتفتيش الإسرائيلي",
+            text: `
+                <p class="content-text">
+                    عند الوصول إلى المعبر الإسرائيلي:
+                    <ol>
+                        <li>تُستلم الشنط من الباص ويُحسب عددها، ثم توضع ليبل على الجواز.</li>
+                        <li>تمر أنت والشنط على التفتيش الإسرائيلي.</li>
+                        <li>يتم إصدار تصريح الدخول الإسرائيلي.</li>
+                    </ol>
+                </p>
+            `
+        }
+    },
+    {
+        title: "الدخول إلى الجانب الفلسطيني",
+        icon: "Flag",
+        phase: "palestinian-phase",
+        phaseName: "الجانب الفلسطيني",
+        content: {
+            title: "المرحلة السادسة: ختم الجواز واستلام الشنط",
+            text: `
+                <p class="content-text">
+                    عند الوصول إلى الجانب الفلسطيني:
+                    <ol>
+                        <li>يتم ختم الليبل على الجواز وختم الشرطة الفلسطينية.</li>
+                        <li>تتوجه لاستلام الشنط من صالة الاستلام.</li>
+                        <li>تحجز تذكرة باص وتدفع (6 شيكل للشنطة و12 شيكل للراكب) للوصول إلى الوجهة النهائية مثل أريحا.</li>
+                          <div class="cost-highlight">
+                                <ul>
+                                    <li><strong>رسوم الراكب:</strong> 12 شيكل لكل شخص</li>
+                                    <li><strong>رسوم الشنطة:</strong> 6 شيكل لكل شنطة </li>
+                                </ul>
+                            </div>
+                    </ol>
+                </p>
+            `
+        }
+    },
+    {
+        title: "الوصول إلى أريحا",
+        icon: "Map",
+        phase: "palestinian-phase",
+        phaseName: "الجانب الفلسطيني",
+        content: {
+            title: "المرحلة السابعة: الوصول النهائي",
+            text: `
+                <p class="content-text">
+                    تهانينا! وصلت إلى أريحا، وقد أكملت رحلة العبور بنجاح.
+                </p>
+                <p class="content-text">
+إذا كنت ترغب بمعرفة تفاصيل <strong>حواجز أريحا</strong>   يُرجى زيارة الموقع الإلكتروني التالي:
+                    <a href="https://www.aweenrayeh.com/" target="_blank" rel="noopener noreferrer">
+                        aweenrayeh.com
+                    </a>
+                </p>
+            `
+        }
+    }
+];
 
-            // Initialize total steps counter
-            totalSteps.textContent = stepsData.length;
 
-            function createTimelineStep(step, index) {
-                const stepDiv = document.createElement('div');
-                stepDiv.classList.add('timeline-step', step.phase);
-                stepDiv.setAttribute('role', 'tab');
-                stepDiv.setAttribute('aria-selected', index === currentStep ? 'true' : 'false');
-                stepDiv.setAttribute('tabindex', index === currentStep ? '0' : '-1');
-                
-                if (index === currentStep) {
-                    stepDiv.classList.add('active');
-                } else if (index < currentStep) {
-                    stepDiv.classList.add('completed');
-                }
+    let stepsData = stepsToJordan;
+    let currentStep = 0;
 
-                stepDiv.innerHTML = `
-                    <div class="step-icon">
-                        <span class="step-number">${index + 1}</span>
-                        ${step.icon}
-                    </div>
-                    <div class="timeline-step-title">${step.title}</div>
-                `;
+    totalSteps.textContent = stepsData.length;
 
-                stepDiv.addEventListener('click', () => goToStep(index));
-                stepDiv.addEventListener('keydown', (e) => {
-                    if (e.key === 'Enter' || e.key === ' ') {
-                        e.preventDefault();
-                        goToStep(index);
-                    }
-                });
+    function setRoute(route) {
+        currentStep = 0;
+        stepsData = route === 'toJordan' ? stepsToJordan : stepsToPalestine;
+        totalSteps.textContent = stepsData.length;
+        renderTimeline();
+        renderContent();
+        updateProgressBar();
+        updatePhaseIndicator();
+        saveProgress();
+    }
 
-                return stepDiv;
-            }
+    routeRadios.forEach(radio => {
+        radio.addEventListener('change', (e) => {
+            setRoute(e.target.value);
+        });
+    });
 
-            function renderTimeline() {
-                timeline.innerHTML = '';
-                stepsData.forEach((step, index) => {
-                    const stepElement = createTimelineStep(step, index);
-                    timeline.appendChild(stepElement);
-                });
-            }
+    function createTimelineStep(step, index) {
+        const stepDiv = document.createElement('div');
+        stepDiv.classList.add('timeline-step', step.phase);
+        stepDiv.setAttribute('role', 'tab');
+        stepDiv.setAttribute('aria-selected', index === currentStep ? 'true' : 'false');
+        stepDiv.setAttribute('tabindex', index === currentStep ? '0' : '-1');
+        if (index === currentStep) stepDiv.classList.add('active');
+        else if (index < currentStep) stepDiv.classList.add('completed');
 
-            function updateProgressBar() {
-                const progress = (currentStep / (stepsData.length - 1)) * 100;
-                progressBar.style.width = `${progress}%`;
-                progressBar.setAttribute('aria-valuenow', Math.round(progress));
+        stepDiv.innerHTML = `
+            <div class="step-icon">
+                <span class="step-number">${index + 1}</span>
+                <i data-lucide="${step.icon}" class="w-6 h-6 text-blue-500"></i>
+            </div>
+            <div class="timeline-step-title">${step.title}</div>
+        `;
 
-                // Update progress bar color based on current phase
-                const currentPhase = stepsData[currentStep].phase;
-                if (currentPhase === 'palestinian-phase') {
-                    progressBar.style.background = 'var(--gradient-palestinian)';
-                } else if (currentPhase === 'israeli-phase') {
-                    progressBar.style.background = 'var(--gradient-israeli)';
-                } else if (currentPhase === 'jordanian-phase') {
-                    progressBar.style.background = 'var(--gradient-jordanian)';
-                }
-            }
-            function updatePhaseIndicator() {
-                const currentPhase = stepsData[currentStep].phase;
-                const phaseName = stepsData[currentStep].phaseName;
-                
-                phaseIndicator.className = `phase-indicator ${currentPhase}`;
-                phaseIndicator.textContent = phaseName;
-                
-                contentContainer.className = `content-container ${currentPhase}`;
-            }
+        stepDiv.addEventListener('click', () => goToStep(index));
+        stepDiv.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); goToStep(index); }
+        });
+        return stepDiv;
+    }
 
-            function renderContent() {
-                const step = stepsData[currentStep];
-                
-                contentSection.innerHTML = `
-                    <h2 class="content-title">${step.content.title}</h2>
-                    <div>${step.content.text}</div>
-                `;
+    function renderTimeline() {
+        timeline.innerHTML = '';
+        stepsData.forEach((step,index)=>timeline.appendChild(createTimelineStep(step,index)));
+        lucide.createIcons();
+    }
 
-                // Update navigation buttons
-                prevBtn.disabled = currentStep === 0;
-                nextBtn.disabled = currentStep === stepsData.length - 1;
-                
-                // Update step counter
-                currentStepNumber.textContent = currentStep + 1;
+    function updateProgressBar() {
+        const progress = (currentStep / (stepsData.length - 1)) * 100;
+        progressBar.style.width = `${progress}%`;
+        progressBar.setAttribute('aria-valuenow', Math.round(progress));
+        const currentPhase = stepsData[currentStep].phase;
+        if (currentPhase === 'palestinian-phase') progressBar.style.background = 'var(--gradient-palestinian)';
+        else if (currentPhase === 'israeli-phase') progressBar.style.background = 'var(--gradient-israeli)';
+        else if (currentPhase === 'jordanian-phase') progressBar.style.background = 'var(--gradient-jordanian)';
+    }
 
-                // Update button text for last step
-                if (currentStep === stepsData.length - 1) {
-                    nextBtn.innerHTML = '✓ اكتمال الرحلة';
-                } else {
-                    nextBtn.innerHTML = 'التالي →';
-                }
+    function updatePhaseIndicator() {
+        const currentPhase = stepsData[currentStep].phase;
+        const phaseName = stepsData[currentStep].phaseName;
+        phaseIndicator.className = `phase-indicator ${currentPhase}`;
+        phaseIndicator.textContent = phaseName;
+        contentContainer.className = `content-container ${currentPhase}`;
+    }
 
-                // Update previous button text for first step
-                if (currentStep === 0) {
-                    prevBtn.innerHTML = '← البداية';
-                } else {
-                    prevBtn.innerHTML = '← السابق';
-                }
-            }
+    function renderContent() {
+        const step = stepsData[currentStep];
+        contentSection.innerHTML = `<h2 class="content-title">${step.content.title}</h2><div>${step.content.text}</div>`;
+        prevBtn.disabled = currentStep === 0;
+        nextBtn.disabled = currentStep === stepsData.length - 1;
+        currentStepNumber.textContent = currentStep + 1;
+        nextBtn.innerHTML = currentStep === stepsData.length - 1 ? '✓ اكتمال الرحلة' : 'التالي ←';
+        prevBtn.innerHTML = currentStep === 0 ? '→ البداية' : '→ السابق';
+    }
 
-            function goToStep(stepIndex) {
-                if (stepIndex >= 0 && stepIndex < stepsData.length) {
-                    currentStep = stepIndex;
-                    renderTimeline();
-                    renderContent();
-                    updateProgressBar();
-                    updatePhaseIndicator();
-                    
-                    // Smooth scroll to content
-                    contentContainer.scrollIntoView({ 
-                        behavior: 'smooth', 
-                        block: 'nearest' 
-                    });
-                    
-                    // Announce step change for screen readers
-                    const announcement = `الخطوة ${currentStep + 1} من ${stepsData.length}: ${stepsData[currentStep].title}`;
-                    announceToScreenReader(announcement);
-                }
-            }
-
-            function announceToScreenReader(message) {
-                const announcement = document.createElement('div');
-                announcement.setAttribute('aria-live', 'polite');
-                announcement.setAttribute('aria-atomic', 'true');
-                announcement.className = 'sr-only';
-                announcement.textContent = message;
-                document.body.appendChild(announcement);
-                
-                setTimeout(() => {
-                    document.body.removeChild(announcement);
-                }, 1000);
-            }
-
-            // Navigation event listeners
-            nextBtn.addEventListener('click', () => {
-                if (currentStep < stepsData.length - 1) {
-                    goToStep(currentStep + 1);
-                }
-            });
-
-            prevBtn.addEventListener('click', () => {
-                if (currentStep > 0) {
-                    goToStep(currentStep - 1);
-                }
-            });
-
-            // Keyboard navigation
-            document.addEventListener('keydown', (e) => {
-                if (e.target.closest('.timeline-step')) return; // Let timeline handle its own keyboard events
-                
-                switch(e.key) {
-                    case 'ArrowLeft':
-                        if (currentStep > 0) {
-                            e.preventDefault();
-                            goToStep(currentStep - 1);
-                        }
-                        break;
-                    case 'ArrowRight':
-                        if (currentStep < stepsData.length - 1) {
-                            e.preventDefault();
-                            goToStep(currentStep + 1);
-                        }
-                        break;
-                }
-            });
-
-            // Swipe gesture support for mobile
-            let startX = null;
-            let startY = null;
-
-            contentContainer.addEventListener('touchstart', (e) => {
-                startX = e.touches[0].clientX;
-                startY = e.touches[0].clientY;
-            });
-
-            contentContainer.addEventListener('touchend', (e) => {
-                if (!startX || !startY) return;
-
-                const endX = e.changedTouches[0].clientX;
-                const endY = e.changedTouches[0].clientY;
-                const diffX = startX - endX;
-                const diffY = startY - endY;
-
-                // Only trigger swipe if horizontal movement is greater than vertical
-                if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 50) {
-                    if (diffX > 0 && currentStep < stepsData.length - 1) {
-                        // Swipe left (next step)
-                        goToStep(currentStep + 1);
-                    } else if (diffX < 0 && currentStep > 0) {
-                        // Swipe right (previous step)
-                        goToStep(currentStep - 1);
-                    }
-                }
-
-                startX = null;
-                startY = null;
-            });
-
-            // Auto-save progress to localStorage
-            function saveProgress() {
-                try {
-                    localStorage.setItem('kerameh-bridge-progress', currentStep.toString());
-                } catch (e) {
-                    // Ignore localStorage errors
-                }
-            }
-
-            function loadProgress() {
-                try {
-                    const saved = localStorage.getItem('kerameh-bridge-progress');
-                    if (saved !== null) {
-                        const savedStep = parseInt(saved, 10);
-                        if (savedStep >= 0 && savedStep < stepsData.length) {
-                            return savedStep;
-                        }
-                    }
-                } catch (e) {
-                    // Ignore localStorage errors
-                }
-                return 0;
-            }
-
-            // Add loading animation
-            function showLoadingAnimation() {
-                contentSection.style.opacity = '0.5';
-                contentSection.style.transform = 'translateY(10px)';
-                
-                setTimeout(() => {
-                    contentSection.style.opacity = '1';
-                    contentSection.style.transform = 'translateY(0)';
-                }, 150);
-            }
-
-            // Enhanced goToStep with loading animation
-            const originalGoToStep = goToStep;
-            goToStep = function(stepIndex) {
-                showLoadingAnimation();
-                setTimeout(() => {
-                    originalGoToStep(stepIndex);
-                    saveProgress();
-                }, 100);
-            };
-
-            // Initialize the application
-            function init() {
-                // Load saved progress
-                currentStep = loadProgress();
-                
-                // Initial render
+    function goToStep(stepIndex) {
+        if (stepIndex >= 0 && stepIndex < stepsData.length) {
+            showLoadingAnimation();
+            setTimeout(() => {
+                currentStep = stepIndex;
                 renderTimeline();
                 renderContent();
                 updateProgressBar();
                 updatePhaseIndicator();
-                
-                // Add entrance animation
-                setTimeout(() => {
-                    document.body.style.opacity = '1';
-                }, 100);
-
-                // Announce initial state to screen readers
-                const initialAnnouncement = `تطبيق رحلة عبور جسر الكرامة. ${stepsData.length} خطوات إجمالي. الخطوة الحالية: ${currentStep + 1}`;
-                announceToScreenReader(initialAnnouncement);
-            }
-
-            // Start the application
-            init();
-
-            // Add some visual polish with intersection observer
-            if ('IntersectionObserver' in window) {
-                const observer = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            entry.target.style.animationPlayState = 'running';
-                        }
-                    });
-                }, {
-                    threshold: 0.1
-                });
-
-                // Observe timeline steps for animations
-                setTimeout(() => {
-                    document.querySelectorAll('.timeline-step').forEach(step => {
-                        observer.observe(step);
-                    });
-                }, 500);
-            }
-
-            // Add print styles
-            const printStyles = `
-                @media print {
-                    body { background: white !important; }
-                    .header, .footer { background: white !important; box-shadow: none !important; }
-                    .timeline-wrapper, .content-container { 
-                        box-shadow: none !important; 
-                        border: 1px solid #ddd !important; 
-                    }
-                    .step-navigation { display: none !important; }
-                    .progress-bar::after { display: none !important; }
-                }
-            `;
-            
-            const styleSheet = document.createElement('style');
-            styleSheet.textContent = printStyles;
-            document.head.appendChild(styleSheet);
-        });
-
-        // Add service worker for offline functionality (optional)
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                // You can add a service worker here for offline functionality
-                console.log('Service Worker support detected');
-            });
+                saveProgress();
+            }, 100);
         }
-    </script>
+    }
+
+    function showLoadingAnimation() {
+        contentSection.style.opacity = '0.5';
+        contentSection.style.transform = 'translateY(10px)';
+        setTimeout(()=>{contentSection.style.opacity='1'; contentSection.style.transform='translateY(0)';},150);
+    }
+
+    function saveProgress() { localStorage.setItem('kerameh-bridge-progress', currentStep.toString()); }
+
+    function loadProgress() {
+        const saved = localStorage.getItem('kerameh-bridge-progress');
+        if (saved!==null) {
+            const savedStep=parseInt(saved,10);
+            if(savedStep>=0&&savedStep<stepsData.length) return savedStep;
+        }
+        return 0;
+    }
+
+    nextBtn.addEventListener('click',()=>{if(currentStep<stepsData.length-1) goToStep(currentStep+1);});
+    prevBtn.addEventListener('click',()=>{if(currentStep>0) goToStep(currentStep-1);});
+
+    document.addEventListener('keydown',(e)=>{
+        if(e.target.closest('.timeline-step')) return;
+        if(e.key==='ArrowLeft'&&currentStep>0) {e.preventDefault(); goToStep(currentStep-1);}
+        if(e.key==='ArrowRight'&&currentStep<stepsData.length-1){e.preventDefault(); goToStep(currentStep+1);}
+    });
+
+    let startX=null,startY=null;
+    contentContainer.addEventListener('touchstart',(e)=>{startX=e.touches[0].clientX;startY=e.touches[0].clientY;});
+    contentContainer.addEventListener('touchend',(e)=>{
+        if(!startX||!startY) return;
+        const diffX=startX-e.changedTouches[0].clientX;
+        const diffY=startY-e.changedTouches[0].clientY;
+        if(Math.abs(diffX)>Math.abs(diffY)&&Math.abs(diffX)>50){
+            if(diffX>0&&currentStep<stepsData.length-1) goToStep(currentStep+1);
+            else if(diffX<0&&currentStep>0) goToStep(currentStep-1);
+        }
+        startX=null; startY=null;
+    });
+
+    function init() {
+        currentStep = loadProgress();
+        renderTimeline();
+        renderContent();
+        updateProgressBar();
+        updatePhaseIndicator();
+        document.body.style.opacity='1';
+    }
+
+    init();
+});
+</script>
 </body>
 </html>
-            

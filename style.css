@@ -1,0 +1,297 @@
+/* ================================
+   Reset + Base Styles
+================================ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "IBM Plex Sans Arabic", sans-serif;
+  line-height: 1.7;
+  background: #f7f8fa;
+  color: #222;
+  transition: background 0.3s, color 0.3s;
+  opacity: 0; /* fade-in handled by JS */
+}
+
+h1, h2, h3 {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+p {
+  margin-bottom: 1rem;
+}
+
+/* ================================
+   Colors & Gradients per Phase
+================================ */
+:root {
+  --gradient-palestinian: linear-gradient(90deg, #007a3d, #e03c31);
+  --gradient-israeli: linear-gradient(90deg, #0038b8, #00a1df);
+  --gradient-jordanian: linear-gradient(90deg, #ce1126, #007a3d);
+
+  --color-palestinian: #007a3d;
+  --color-israeli: #0038b8;
+  --color-jordanian: #ce1126;
+}
+
+/* ================================
+   Header + Progress Bar
+================================ */
+.header {
+  background: #fff;
+  padding: 1.2rem;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  margin-bottom: 1rem;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.progress-container {
+  height: 10px;
+  width: 100%;
+  background: #e0e0e0;
+  border-radius: 5px;
+  margin-top: 1rem;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  width: 0%;
+  transition: width 0.4s ease-in-out, background 0.3s;
+}
+
+/* ================================
+   Timeline
+================================ */
+.timeline-wrapper {
+  overflow-x: auto;
+  padding: 1rem;
+}
+
+.timeline {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  min-width: 700px;
+}
+
+.timeline-step {
+  flex: 1;
+  text-align: center;
+  cursor: pointer;
+  padding: 0.6rem;
+  border-radius: 12px;
+  background: #fff;
+  transition: all 0.3s;
+  border: 2px solid transparent;
+}
+
+.timeline-step:hover {
+  transform: translateY(-3px);
+}
+
+.timeline-step.active {
+  border-color: #444;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+.timeline-step.completed {
+  opacity: 0.6;
+}
+
+.step-icon {
+  font-size: 1.5rem;
+  margin-bottom: 0.3rem;
+}
+
+.step-number {
+  font-size: 0.8rem;
+  background: #ddd;
+  border-radius: 50%;
+  padding: 2px 6px;
+  margin-left: 4px;
+}
+
+/* ================================
+   Content
+================================ */
+.main-container {
+  max-width: 900px;
+  margin: auto;
+  padding: 1rem;
+}
+
+.content-container {
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 16px;
+  margin-top: 1rem;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+  transition: border-right 0.3s;
+}
+
+.phase-indicator {
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.8rem;
+  border-radius: 8px;
+  display: inline-block;
+  color: #fff;
+}
+
+.content-title {
+  margin-bottom: 1rem;
+}
+
+.content-text {
+  margin-bottom: 0.8rem;
+}
+
+.cost-highlight {
+  background: #d6ffce;
+  padding: 0.8rem;
+  border-left: 4px solid #637859;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+/* Phase coloring */
+.palestinian-phase .phase-indicator {
+  background: var(--color-palestinian);
+}
+.israeli-phase .phase-indicator {
+  background: var(--color-israeli);
+}
+.jordanian-phase .phase-indicator {
+  background: var(--color-jordanian);
+}
+
+/* ================================
+   Navigation Buttons
+================================ */
+.step-navigation {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 1.2rem 0;
+}
+
+.nav-button {
+  padding: 0.6rem 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  background: #444;
+  color: #fff;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.nav-button:hover:not(:disabled) {
+  background: #222;
+  transform: translateY(-2px);
+}
+
+.nav-button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.step-counter {
+  font-weight: bold;
+  color: #555;
+}
+
+/* ================================
+   Footer
+================================ */
+.footer {
+  text-align: center;
+  padding: 1rem;
+  margin-top: 2rem;
+  background: #f1f1f1;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+/* ================================
+   Responsive
+================================ */
+@media (max-width: 600px) {
+  .timeline {
+    min-width: unset;
+    flex-direction: column;
+  }
+  
+  .timeline-step {
+    text-align: right;
+  }
+  
+  .step-navigation {
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+}
+.toggle-wrapper {
+  display: flex;
+  justify-content: center; 
+  margin: 20px 0;
+}
+
+.toggle-switch {
+  position: relative;
+  display: flex;
+  width: 250px;
+  border: 1px solid #ccc;
+  border-radius: 25px;
+  overflow: hidden;
+  font-family: Arial, sans-serif;
+  right: 40%;
+}
+
+.toggle-switch input {
+  display: none;
+}
+
+.toggle-switch label {
+  flex: 1;
+  text-align: center;
+  padding: 10px 0;
+  cursor: pointer;
+  transition: color 0.3s;
+  z-index: 2;
+}
+
+.switch-slider {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  background-color: #d6ffce;
+  border-radius: 25px;
+  transition: left 0.3s;
+  z-index: 1;
+}
+
+#toJordan:checked ~ .switch-slider {
+  left: 50%;
+}
+
+.toggle-switch label {
+  color: #000000;
+}
+
+#toJordan:checked ~ label[for="toJordan"],
+#toPalestine:checked ~ label[for="toPalestine"] {
+  color: rgb(0, 0, 0);
+}
