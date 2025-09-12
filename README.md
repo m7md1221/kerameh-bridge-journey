@@ -16,3 +16,5 @@ open index.html
 
 ## Status
 🚧 This is an MVP / proof-of-concept. Future improvements may include maps, time estimates, offline support, and multi-language options.
+
+.
