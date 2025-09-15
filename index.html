@@ -78,8 +78,7 @@
 
 <script>
 document.getElementById("suggestionForm").addEventListener("submit", function(e) {
-  e.preventDefault(); // يمنع إعادة تحميل الصفحة
-
+  e.preventDefault(); 
   const form = e.target;
   const formData = new FormData(form);
 
@@ -99,352 +98,154 @@ document.getElementById("suggestionForm").addEventListener("submit", function(e)
 
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const timeline = document.querySelector('.timeline');
-            const progressBar = document.querySelector('.progress-bar');
-            const contentSection = document.querySelector('.content-section');
-            const contentContainer = document.querySelector('.content-container');
-            const phaseIndicator = document.querySelector('.phase-indicator');
-            const prevBtn = document.getElementById('prevBtn');
-            const nextBtn = document.getElementById('nextBtn');
-            const currentStepNumber = document.getElementById('currentStepNumber');
-            const totalSteps = document.getElementById('totalSteps');
-            const routeRadios = document.querySelectorAll('input[name="route"]');
-
-            //  فلسطين الى الأردن
-            const stepsToJordan =
-                [
-                    {
-                        title: "الوصول إلى أريحا",
-                        icon: "Car",
-                        phase: "palestinian-phase",
-                        phaseName: "المنطقة الفلسطينية",
-                        content: {
-                            title: "المرحلة الأولى: الوصول إلى نقطة العبور في أريحا",
-                            text: `
-            <p class="content-text">
-                عند وصولك إلى البوابة الرئيسية لمعبر جسر الكرامة، سيقوم موظف الأمن بإعطائك رقم دورك 
-                مكتوبًا على ورقة صغيرة. هذا الرقم مهم جداً لأنك ستحتاجه في المرحلة الرابعة عند ختم الجواز.
-            </p>
-            <div class="cost-highlight1">
-                <strong>نصيحة مهمة:</strong> احتفظ بهذا الرقم في مكان آمن وسهل الوصول إليه
-            </div>
-            <p class="content-text">
-               إذا كنت ترغب بمعرفة تفاصيل <strong>حواجز أريحا</strong> قبل الوصول، يُرجى زيارة الموقع الإلكتروني التالي:
-                <a href="https://www.aweenrayeh.com/" target="_blank" rel="noopener noreferrer">
-                    www.aweenrayeh.com
-                </a>
-            </p>
-        `
-                        }
-                    },
-
-                    {
-                        title: "قاعة معالجة الشنط",
-                        icon: "Luggage",
-                        phase: "palestinian-phase",
-                        phaseName: "المنطقة الفلسطينية",
-                        content: {
-                            title: "المرحلة الثانية: قاعة معالجة الأمتعة والشنط",
-                            text: `
-                            <p class="content-text">
-                                في هذه القاعة، ستحتاج لدفع رسوم نقل الأمتعة والشنط عبر الجسر:
-                            </p>
-                            <div class="cost-highlight">
-                                <ul>
-                                    <li><strong>رسوم الراكب:</strong> 26 شيكل لكل شخص</li>
-                                    <li><strong>رسوم الشنطة:</strong> 6 شيكل لكل شنطة كبيرة</li>
-                                    <li><strong>ملاحظة:</strong> الشنطة اليدوية (الهاند باج) لا تُحسب ضمن الرسوم</li>
-                                </ul>
-                            </div>
-                            <p class="content-text">
-                                <strong>مهم جداً:</strong> احتفظ بالإيصال الذي ستحصل عليه، فستحتاجه لاستلام شنطك في المنطقة الأردنية.
-                            </p>
-                        `
-                        }
-                    },
-                    {
-                        title: "دفع ضريبة المسافر",
-                        icon: "credit-card",
-                        phase: "palestinian-phase",
-                        phaseName: "المنطقة الفلسطينية",
-                        content: {
-                            title: "المرحلة الثالثة: دفع ضريبة المغادرة",
-                            text: `
-                            <p class="content-text">
-                                في هذه المرحلة، تدفع ضريبة المغادرة الإجبارية لجميع المسافرين المغادرين عبر جسر الكرامة.
-                            </p>
-                            <div class="cost-highlight">
-                                <strong>قيمة الضريبة:</strong> 178 شيكل لكل مسافر
-                            </div>
-                            <p class="content-text">
-                                بعد الدفع، ستحصل على وصل ضريبة المغادرة. <strong>احتفظ بهذا الوصل جيداً</strong> 
-                                فسوف يُطلب منك إبرازه في المراحل القادمة للتأكد من دفع الضريبة.
-                            </p>
-                        `
-                        }
-                    },
-                    {
-                        title: "ختم الجواز الفلسطيني",
-                        icon: "file-text",
-                        phase: "palestinian-phase",
-                        phaseName: "المنطقة الفلسطينية",
-                        content: {
-                            title: "المرحلة الرابعة: ختم جواز السفر - المنطقة الفلسطينية",
-                            text: `
-                            <p class="content-text">
-                                في هذه المرحلة، ستنتظر في القاعة المخصصة حتى يتم النداء على رقمك 
-                                الذي حصلت عليه في بداية الرحلة (المرحلة الأولى).
-                            </p>
-                            <ul class="content-text">
-                                <li>انتبه جيداً للنداء على الأرقام</li>
-                                <li>عند النداء على رقمك، توجه إلى الموظف المختص</li>
-                                <li>سيتم ختم جواز سفرك بختم المغادرة الفلسطيني</li>
-                                <li>بعد الختم، توجه إلى الحافلة المتجهة للجانب الإسرائيلي</li>
-                            </ul>
-                        `
-                        }
-                    },
-                    {
-                        title: "التفتيش 'الإسرائيلي'",
-                        icon: "shield-check",
-                        phase: "israeli-phase",
-                        phaseName: "المنطقة الإسرائيلية",
-                        content: {
-                            title: "المرحلة الخامسة: التفتيش والمعالجة - المنطقة الإسرائيلية",
-                            text: `
-                            <p class="content-text">
-                                في هذا الجانب، ستمر بعدة خطوات أمنية وإدارية:
-                            </p>
-                            <ul class="content-text">
-                                <li><strong>تفتيش الأمتعة:</strong> مرر شنط اليد عبر جهاز الفحص الإلكتروني</li>
-                                <li><strong>التفتيش الشخصي:</strong> مر عبر البوابة الإلكترونية للتفتيش</li>
-                                <li><strong>معالجة الوثائق:</strong> ضع جواز السفر على الماكينة الإلكترونية</li>
-                                <li><strong>استلام التصريح:</strong> ستحصل على ورقة تصريح خروج</li>
-                                <li><strong>الختم النهائي:</strong> انتظر حتى يتم ختم ورقة التصريح</li>
-                            </ul>
-                            <p class="content-text">
-                                <strong>ملاحظة:</strong> هذه المرحلة قد تستغرق وقتاً أطول حسب الازدحام والإجراءات الأمنية.
-                            </p>
-                        `
-                        }
-                    },
-                    {
-                        title: "الحافلة إلى الأردن",
-                        icon: "Bus",
-                        phase: "israeli-phase",
-                        phaseName: "المنطقة الإسرائيلية",
-                        content: {
-                            title: "المرحلة السادسة: الانتقال بالحافلة إلى المنطقة الأردنية",
-                            text: `
-                            <p class="content-text">
-                                بعد إتمام الإجراءات الإسرائيلية، ستنتقل إلى الحافلة المخصصة لعبور الجسر:
-                            </p>
-                            <ul class="content-text">
-                                <li>ضع الشنط الكبيرة في مخزن الحافلة السفلي</li>
-                                <li>احتفظ بالشنطة اليدوية معك داخل الحافلة</li>
-                                <li>اتبع تعليمات سائق الحافلة والمرافقين</li>
-                                <li>الرحلة تستغرق حوالي 10-15 دقيقة عبر الجسر</li>
-                            </ul>
-                            <p class="content-text">
-                                <strong>تنبيه:</strong> لا يُسمح بالنزول من الحافلة أو التصوير أثناء عبور الجسر.
-                            </p>
-                        `
-                        }
-                    },
-                    {
-                        title: "الوصول إلى الأردن",
-                        icon: "Flag",
-                        phase: "jordanian-phase",
-                        phaseName: "المنطقة الأردنية",
-                        content: {
-                            title: "المرحلة السابعة: الدخول والوصول - المنطقة الأردنية",
-                            text: `
-                            <p class="content-text">
-                                هذه هي المرحلة الأخيرة من رحلتك. ستتم معالجة دخولك إلى الأردن من خلال:
-                            </p>
-                            <ul class="content-text">
-                                <li><strong>تفتيش الأمتعة:</strong> مرر شنط اليد عبر البوابة الإلكترونية</li>
-                                <li><strong>ختم الدخول:</strong> أبرز البطاقة الخضراء واختم جواز سفرك</li>
-                                <li><strong>دفع الرسوم:</strong> ادفع ضريبة الدخول</li>
-                                <li><strong>استلام الأمتعة:</strong> استلم شنطك من المخزن بالإيصالات</li>
-                            </ul>
-                            <div class="cost-highlight">
-                                <strong>ضريبة الدخول الأردنية:</strong> 10 دنانير أردنية لكل مسافر
-                            </div>
-                            <p class="content-text">
-                                <strong>الحمدلله على سلامتك!</strong> هيك خلصت رحلة العبور ووصلت إلى الأردن. 
-                                تأكد من استلام جميع أمتعتك قبل مغادرة المعبر.
-                            </p>
-                        `
-                        }
-                    }
-                ];
-            // الأردن إلى فلسطين
-            const stepsToPalestine = [
-                {
-                    title: "الحجز على منصة جت",
-                    icon: "Calendar",
-                    phase: "jordanian-phase",
-                    phaseName: "المنطقة الأردنية",
-                    content: {
-                        title: "المرحلة الأولى: الحجز والاستعداد قبل العبور",
-                        text: `
-            <p class="content-text">
-                يجب حجز تذكرة على منصة 
-                <a href="https://jett-khb.com.jo/booking" target="_blank">جت</a> 
-                بتاريخ يوم العبور وتحديد عدد الشنط المصاحبة.
-            </p>
-            <ul class="content-text">
-                <li>تأكد من إدخال <strong>الاسم الكامل، تاريخ الميلاد، ورقم الجواز</strong> بشكل صحيح.</li>
-                <li>يفضل التسجيل بالموقع SignUp حتى تسهل عملية الرجوع للتذكرة في حال ضاعت، وايضاً احتفظ بصورة من التذكرة أو <strong>رمز QR</strong> لتقديمه عند المعبر.</li>
-                <li>يفضل الوصول <strong>قبل ساعة على الأقل</strong> من موعد الرحلة لتفادي أي تأخير.</li>
-            </ul>
-            <div class="cost-highlight">
-                <strong>رسوم منصة جت:</strong> 7 دنانير أردنية لكل راكب، 2 دينار لكل شنطة كبيرة (الشنط اليدوية لا تحتسب).
-            </div>
-            <div class="cost-highlight1">
-                <strong>نصيحة مهمة:</strong> يفضل الحجز قبل فترة لتجنب نفاد المقاعد، خصوصاً في أوقات العطل والأعياد.
-            </div>
-        `
-                    }
-                }
-
-                ,
-                {
-                    title: "الوصول إلى المعبر الأردني",
-                    icon: "Flag",
-                    phase: "jordanian-phase",
-                    phaseName: "المنطقة الأردنية",
-                    content: {
-                        title: "المرحلة الثانية: التأكد من الحجز والتوجه للجسر",
-                        text: `
-                <p class="content-text">
-                 <ol>
-                        <li>عند الوصول للجسر من جهة الأردن، عليك اظهار التذكرة للمفتشين قبل الدخول</li>
-                        <li>تقوم بالتوجه الى الداخل ووضع جميع الشنط للفحص .</li>
-                    </ol>
-                    </p>
-            `
-                    }
-                },
-                {
-                    title: "إجراءات مغادرة الأردن",
-                    icon: "file-text",
-                    phase: "jordanian-phase",
-                    phaseName: "المنطقة الأردنية",
-                    content: {
-                        title: "المرحلة الثالثة: التفتيش وتعبئة أوراق المغادرة",
-                        text: `
-            <ul class="content-text">
-                <li><strong>تعبئة ورقة المغادرة (الورقة البيضاء) ومن ثم الانتظار وختمها عند الشبابيك</strong> من الشبابيك.</li>
-                <li>سيتم ختم جواز السفر ايضاً عند الشبابيك</li>
-            </ul>
-            <div class="cost-highlight1">
-                <strong>نصيحة مهمة:</strong> احتفظ بورقة المغادرة في مكان آمن، ستحتاجها بعد قليل
-            </div>
-        `
-                    }
-                }
-                ,
-                {
-                    title: "الصعود على الباص الأردني",
-                    icon: "Bus",
-                    phase: "jordanian-phase",
-                    phaseName: "المنطقة الأردنية",
-                    content: {
-                        title: "المرحلة الرابعة: الانتقال عبر الباص",
-                        text: `
-                <p class="content-text">
-                    تصعد على الباص، وسيأخذ شرطي قطعة من ورقة المغادرة ويترك لك القطعة الثانية التي تُستخدم عند آخر نقطة تفتيش أردنية.
-                </p>
-            `
-                    }
-                },
-                {
-                    title: "الوصول إلى المعبر 'الإسرائيلي'",
-                    icon: "shield-check",
-                    phase: "israeli-phase",
-                    phaseName: "المنطقة الإسرائيلية",
-                    content: {
-                        title: "المرحلة الخامسة: استلام الشنط والتفتيش الإسرائيلي",
-                        text: `
-                <p class="content-text">
-                    عند الوصول إلى المعبر الإسرائيلي:
-                    <ol>
-                        <li>تقوم بأخذ الشنط من الباص ومن ثم تنتظر على الشباك لادخال الشنط للتفتيش ولتوضع ورقة (Label) على الجواز</li>
-                        <li>تمر أنت والشنط اليدوية الصغيرة على التفتيش</li>
-                        <li>يتم ختم جواز السفر للدخول</li>
-                        <li>تقوم باستلام الشنط الخاصة بك والتوجه خارجاً الى الباص وشراء تذكرة ركوب الباص والشنط</li>
-                    </ol>
-                    <div class="cost-highlight">
-                        <ul>
-                            <li><strong>رسوم الراكب:</strong> 6 شيكل لكل شخص</li>
-                            <li><strong>رسوم الشنطة:</strong> 3 شيكل لكل شنطة </li>
-                        </ul>
-                    </div>
-                </p>
-            `
-                    }
-                },
-                {
-                    title: "الدخول إلى المنطقة الفلسطينية",
-                    icon: "Flag",
-                    phase: "palestinian-phase",
-                    phaseName: "المنطقة الفلسطينية",
-                    content: {
-                        title: "المرحلة السادسة: ختم الجواز واستلام الشنط",
-                        text: `
-                <p class="content-text">
-                    عند الوصول إلى المنطقة الفلسطينية:
-                    <ol>
-                        <li>يتم ختم الجواز من قبل شرطة الحدود الفلسطينية</li>
-                        <li>تكمل الطريق الى التفتيش الجسدي او الشنط في حال طلبت الشرطة منك ذلك</li>
-                        <li>تحجز تذكرة باص وتدفع للوصول إلى الوجهة النهائية مثل أريحا</li>
-                          
-                    </ol>
-                </p>
-            `
-                    }
-                },
-                {
-                    title: "الوصول النهائي! ",
-                    icon: "Map",
-                    phase: "palestinian-phase",
-                    phaseName: "المنطقة الفلسطينية",
-                    content: {
-                        title: "المرحلة السابعة: الوصول النهائي",
-                        text: `
-                <p class="content-text">
-                    الحمدلله على السلامة! وصلت إلى مدينة أريحا، وبامكانك التوجه الى بيتك واحبابك براحتك
-                </p>
-                <p class="content-text">
-إذا كنت ترغب بمعرفة تفاصيل <strong>حواجز وطرق أريحا وباقي المدن الفلسطينية</strong>   يُرجى زيارة موقع "ع وين رايح" التالي:
-                    <a href="https://www.aweenrayeh.com/" target="_blank" rel="noopener noreferrer">
-                        www.aweenrayeh.com
-                    </a>
-                </p>
-            `
-                    }
-                }
-            ];
+     document.addEventListener('DOMContentLoaded', () => {
+  const timeline = document.querySelector('.timeline');
+  const progressBar = document.querySelector('.progress-bar');
+  const contentSection = document.querySelector('.content-section');
+  const contentContainer = document.querySelector('.content-container');
+  const phaseIndicator = document.querySelector('.phase-indicator');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const currentStepNumber = document.getElementById('currentStepNumber');
+  const totalSteps = document.getElementById('totalSteps');
+  const routeRadios = document.querySelectorAll('input[name="route"]');
+let allSteps = [];
 
 
-            let stepsData = stepsToJordan;
-            let currentStep = 0;
+  let stepsData = [];
+  let currentStep = 0;
+async function fetchSteps() {
+  try {
+    const response = await fetch("https://bridge-cms.onrender.com/api/steps?populate=*");
+    const data = await response.json();
 
-            totalSteps.textContent = stepsData.length;
+    allSteps = data.data.map(item => ({
+  step: item.step,
+  title: item.Title,
+  icon: item.icon,
+  phase: item.phase,
+  phaseName: item.phaseName,
+  direction: item.direction,
+  contentTitle: item.Content?.title,
+  contentText: item.Content?.text,
+impNote: item.Content?.Imp_note
+}));
 
-            function setRoute(route) {
-                currentStep = 0;
-                stepsData = route === 'toJordan' ? stepsToJordan : stepsToPalestine;
-                totalSteps.textContent = stepsData.length;
-                renderTimeline();
-                renderContent();
-                updateProgressBar();
-                updatePhaseIndicator();
-                saveProgress();
-            }
+
+    const stepsToJordan = allSteps
+      .filter(s => s.direction === "palestine to jordan")
+      .sort((a,b) => a.step - b.step);
+
+    const stepsToPalestine = allSteps
+      .filter(s => s.direction === "jordan to palestine")
+      .sort((a,b) => a.step - b.step);
+
+    stepsData = stepsToJordan; // أو stepsToPalestine حسب الصفحة
+    totalSteps.textContent = stepsData.length;
+
+    currentStep = loadProgress();
+
+    // بعد ما نجهز البيانات، نعمل render
+    renderTimeline();
+    renderContent();
+    updateProgressBar();
+    updatePhaseIndicator();
+    document.body.style.opacity = '1';
+
+  } catch (error) {
+    console.error("Error fetching steps:", error);
+  }
+}
+
+// فقط ننادي fetchSteps()
+fetchSteps();
+function renderContent() {
+  const step = stepsData[currentStep];
+  if (!step) return;
+
+  contentSection.innerHTML = `
+    <h2 class="content-title">${step.contentTitle || ''}</h2>
+    <div>${renderRichText(step.contentText)}</div>
+    ${step.impNote ? `<div class="cost-highlight1">${renderRichText(step.impNote)}</div>` : ''}
+  `;
+
+  prevBtn.disabled = currentStep === 0;
+  nextBtn.disabled = currentStep === stepsData.length - 1;
+  currentStepNumber.textContent = currentStep + 1;
+  nextBtn.innerHTML = currentStep === stepsData.length - 1 ? '✓ اكتمال الرحلة' : 'التالي ←';
+  prevBtn.innerHTML = currentStep === 0 ? '→ البداية' : '→ السابق';
+}
+function renderRichText(blocks) {
+  if (!blocks) return '';
+
+  return blocks.map(block => {
+    const type = block.type;
+    const children = block.children || [];
+
+    const inner = children.map(child => {
+      if (child.text !== undefined) {
+        let t = child.text;
+        if (child.bold) t = `<strong>${t}</strong>`;
+        if (child.italic) t = `<em>${t}</em>`;
+        if (child.underline) t = `<u>${t}</u>`;
+        return t;
+      } else if (child.type && child.children) {
+        return renderRichText([child]); // recursive
+      }
+      return '';
+    }).join('');
+
+    switch(type) {
+      case 'paragraph': return `<p>${inner}</p>`;
+      case 'heading': return `<h3>${inner}</h3>`;
+      case 'bulletList': 
+        return `<ul>${children.map(item => renderRichText([item])).join('')}</ul>`;
+      case 'orderedList': 
+        return `<ol>${children.map(item => renderRichText([item])).join('')}</ol>`;
+      case 'list-item': 
+        return `<li>${inner}</li>`;
+      case 'quote': return `<blockquote>${inner}</blockquote>`;
+      case 'link': return `<a href="${block.url}" target="_blank" rel="noopener noreferrer">${inner}</a>`;
+      default: return inner;
+    }
+  }).join('');
+}
+
+
+function showStep(stepIndex) {
+  currentStep = stepIndex;
+  renderTimeline();
+  renderContent();
+  updateProgressBar();
+  updatePhaseIndicator();
+  saveProgress();
+}
+
+
+
+function setRoute(route) {
+  if (!stepsData || !stepsData.length) return;
+
+  if (route === 'toJordan') {
+    stepsData = allSteps.filter(s => s.direction === "palestine to jordan").sort((a,b)=>a.step-b.step);
+  } else {
+    stepsData = allSteps.filter(s => s.direction === "jordan to palestine").sort((a,b)=>a.step-b.step);
+  }
+
+  totalSteps.textContent = stepsData.length;
+  currentStep = 0; // نبدأ من أول خطوة
+  renderTimeline();
+  renderContent();
+  updateProgressBar();
+  updatePhaseIndicator();
+  saveProgress();
+}
+
+// ربط الحدث مع الـ toggle
+routeRadios.forEach(radio => {
+  radio.addEventListener('change', e => setRoute(e.target.value));
+});
+
 
             routeRadios.forEach(radio => {
                 radio.addEventListener('change', (e) => {
@@ -453,29 +254,35 @@ document.getElementById("suggestionForm").addEventListener("submit", function(e)
             });
 
             function createTimelineStep(step, index) {
-                const stepDiv = document.createElement('div');
-                stepDiv.classList.add('timeline-step', step.phase);
-                stepDiv.setAttribute('role', 'tab');
-                stepDiv.setAttribute('aria-selected', index === currentStep ? 'true' : 'false');
-                stepDiv.setAttribute('tabindex', index === currentStep ? '0' : '-1');
-                if (index === currentStep) stepDiv.classList.add('active');
-                else if (index < currentStep) stepDiv.classList.add('completed');
+    const stepDiv = document.createElement('div');
+    stepDiv.classList.add('timeline-step', step.phase);
+    stepDiv.setAttribute('role', 'tab');
+    stepDiv.setAttribute('aria-selected', index === currentStep ? 'true' : 'false');
+    stepDiv.setAttribute('tabindex', index === currentStep ? '0' : '-1');
 
-                stepDiv.innerHTML = `
-            <div class="step-icon" aria-hidden="true">
-                <span class="step-number">${index + 1}</span>
-                <i data-lucide="${step.icon}" class="w-6 h-6 text-blue-500"></i>
-            </div>
-            <div class="timeline-step-title">${step.title}</div>
-            <div class="sr-only">خطوة ${index + 1} من ${stepsData.length}: ${step.title}</div>
-        `;
+    if (index === currentStep) stepDiv.classList.add('active');
+    else if (index < currentStep) stepDiv.classList.add('completed');
 
-                stepDiv.addEventListener('click', () => goToStep(index));
-                stepDiv.addEventListener('keydown', (e) => {
-                    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); goToStep(index); }
-                });
-                return stepDiv;
-            }
+    stepDiv.innerHTML = `
+        <div class="step-icon" aria-hidden="true">
+            <span class="step-number">${index + 1}</span>
+            <i data-lucide="${step.icon}" class="w-6 h-6 text-blue-500"></i>
+        </div>
+        <div class="timeline-step-title">${step.title}</div>
+        <div class="sr-only">خطوة ${index + 1} من ${stepsData.length}: ${step.title}</div>
+    `;
+
+    stepDiv.addEventListener('click', () => goToStep(index));
+    stepDiv.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            goToStep(index);
+        }
+    });
+
+    return stepDiv;
+}
+
 
             function renderTimeline() {
                 timeline.innerHTML = '';
@@ -483,25 +290,30 @@ document.getElementById("suggestionForm").addEventListener("submit", function(e)
                 lucide.createIcons();
             }
 
-            function updateProgressBar() {
-                const progress = (currentStep / (stepsData.length - 1)) * 100;
-                progressBar.style.width = `${progress}%`;
-                progressBar.setAttribute('aria-valuenow', Math.round(progress));
-                const currentPhase = stepsData[currentStep].phase;
-                if (currentPhase === 'palestinian-phase') progressBar.style.background = 'var(--gradient-palestinian)';
-                else if (currentPhase === 'israeli-phase') progressBar.style.background = 'var(--gradient-israeli)';
-                else if (currentPhase === 'jordanian-phase') progressBar.style.background = 'var(--gradient-jordanian)';
-            }
+           function updateProgressBar() {
+    if (!stepsData[currentStep]) return; // حماية من undefined
+    const progress = (currentStep / (stepsData.length - 1)) * 100;
+    progressBar.style.width = `${progress}%`;
+    progressBar.setAttribute('aria-valuenow', Math.round(progress));
 
-            function updatePhaseIndicator() {
-                const currentPhase = stepsData[currentStep].phase;
-                const phaseName = stepsData[currentStep].phaseName;
-                phaseIndicator.className = `phase-indicator ${currentPhase}`;
-                phaseIndicator.textContent = phaseName;
-                contentContainer.className = `content-container ${currentPhase}`;
-            }
+    const currentPhase = stepsData[currentStep].phase;
+    if (currentPhase === 'palestinian-phase') progressBar.style.background = 'var(--gradient-palestinian)';
+    else if (currentPhase === 'israeli-phase') progressBar.style.background = 'var(--gradient-israeli)';
+    else if (currentPhase === 'jordanian-phase') progressBar.style.background = 'var(--gradient-jordanian)';
+}
 
-            function renderContent() {
+function updatePhaseIndicator() {
+    const step = stepsData[currentStep];
+    if (!step) return; // حماية من undefined
+
+    const currentPhase = step.phase;
+    const phaseName = step.phaseName;
+    phaseIndicator.className = `phase-indicator ${currentPhase}`;
+    phaseIndicator.textContent = phaseName;
+    contentContainer.className = `content-container ${currentPhase}`;
+}
+
+           /* function renderContent() {
                 const step = stepsData[currentStep];
                 contentSection.innerHTML = `<h2 class="content-title">${step.content.title}</h2><div>${step.content.text}</div>`;
                 prevBtn.disabled = currentStep === 0;
@@ -509,7 +321,7 @@ document.getElementById("suggestionForm").addEventListener("submit", function(e)
                 currentStepNumber.textContent = currentStep + 1;
                 nextBtn.innerHTML = currentStep === stepsData.length - 1 ? '✓ اكتمال الرحلة' : 'التالي ←';
                 prevBtn.innerHTML = currentStep === 0 ? '→ البداية' : '→ السابق';
-            }
+            }*/
 
             function goToStep(stepIndex) {
                 if (stepIndex >= 0 && stepIndex < stepsData.length) {
