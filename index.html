@@ -128,7 +128,8 @@ async function fetchSteps() {
   direction: item.direction,
   contentTitle: item.Content?.title,
   contentText: item.Content?.text,
-impNote: item.Content?.Imp_note
+impNote: item.Content?.Imp_note,
+contentText1: item.Content?.text1
 }));
 
 
@@ -140,12 +141,11 @@ impNote: item.Content?.Imp_note
       .filter(s => s.direction === "jordan to palestine")
       .sort((a,b) => a.step - b.step);
 
-    stepsData = stepsToJordan; // أو stepsToPalestine حسب الصفحة
+    stepsData = stepsToJordan; 
     totalSteps.textContent = stepsData.length;
 
     currentStep = loadProgress();
 
-    // بعد ما نجهز البيانات، نعمل render
     renderTimeline();
     renderContent();
     updateProgressBar();
@@ -157,7 +157,6 @@ impNote: item.Content?.Imp_note
   }
 }
 
-// فقط ننادي fetchSteps()
 fetchSteps();
 function renderContent() {
   const step = stepsData[currentStep];
@@ -167,6 +166,8 @@ function renderContent() {
     <h2 class="content-title">${step.contentTitle || ''}</h2>
     <div>${renderRichText(step.contentText)}</div>
     ${step.impNote ? `<div class="cost-highlight1">${renderRichText(step.impNote)}</div>` : ''}
+        ${step.contentText1 ? `<div>${step.contentText1}</div>` : ''}
+
   `;
 
   prevBtn.disabled = currentStep === 0;
@@ -190,7 +191,7 @@ function renderRichText(blocks) {
         if (child.underline) t = `<u>${t}</u>`;
         return t;
       } else if (child.type && child.children) {
-        return renderRichText([child]); // recursive
+        return renderRichText([child]); 
       }
       return '';
     }).join('');
@@ -233,7 +234,7 @@ function setRoute(route) {
   }
 
   totalSteps.textContent = stepsData.length;
-  currentStep = 0; // نبدأ من أول خطوة
+  currentStep = 0; 
   renderTimeline();
   renderContent();
   updateProgressBar();
@@ -241,7 +242,6 @@ function setRoute(route) {
   saveProgress();
 }
 
-// ربط الحدث مع الـ toggle
 routeRadios.forEach(radio => {
   radio.addEventListener('change', e => setRoute(e.target.value));
 });
@@ -291,7 +291,7 @@ routeRadios.forEach(radio => {
             }
 
            function updateProgressBar() {
-    if (!stepsData[currentStep]) return; // حماية من undefined
+    if (!stepsData[currentStep]) return; 
     const progress = (currentStep / (stepsData.length - 1)) * 100;
     progressBar.style.width = `${progress}%`;
     progressBar.setAttribute('aria-valuenow', Math.round(progress));
@@ -304,7 +304,7 @@ routeRadios.forEach(radio => {
 
 function updatePhaseIndicator() {
     const step = stepsData[currentStep];
-    if (!step) return; // حماية من undefined
+    if (!step) return; 
 
     const currentPhase = step.phase;
     const phaseName = step.phaseName;
@@ -313,28 +313,18 @@ function updatePhaseIndicator() {
     contentContainer.className = `content-container ${currentPhase}`;
 }
 
-           /* function renderContent() {
-                const step = stepsData[currentStep];
-                contentSection.innerHTML = `<h2 class="content-title">${step.content.title}</h2><div>${step.content.text}</div>`;
-                prevBtn.disabled = currentStep === 0;
-                nextBtn.disabled = currentStep === stepsData.length - 1;
-                currentStepNumber.textContent = currentStep + 1;
-                nextBtn.innerHTML = currentStep === stepsData.length - 1 ? '✓ اكتمال الرحلة' : 'التالي ←';
-                prevBtn.innerHTML = currentStep === 0 ? '→ البداية' : '→ السابق';
-            }*/
-
+          
             function goToStep(stepIndex) {
                 if (stepIndex >= 0 && stepIndex < stepsData.length) {
                     showLoadingAnimation();
                     setTimeout(() => {
                         currentStep = stepIndex;
-                        renderTimeline();       // تحديث الـ timeline
+                        renderTimeline();      
                         renderContent();
                         updateProgressBar();
                         updatePhaseIndicator();
                         saveProgress();
 
-                        // Scroll تلقائي للخطوة النشطة
                         const wrapper = document.querySelector('.timeline-wrapper');
                         const activeStep = document.querySelector('.timeline-step.active');
                         if (activeStep) {
